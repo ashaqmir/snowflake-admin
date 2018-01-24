@@ -1,0 +1,165 @@
+<div class="content-wrapper" style="min-height: 706px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      {{pageTitle}}
+    </h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+    <div class="box box-warning">
+      <div class="box-header with-border">
+        <h3 class="box-title">Feature Details</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <form role="form" #featureForm="ngForm" (ngSubmit)="save()">
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Name</label>
+                <input type="text" class="form-control" placeholder="Feature name..." required minlength="4" maxlength="25" name="fname"
+                  [(ngModel)]="currentFeature.name" #fname="ngModel">
+                <div *ngIf="fname.errors && (fname.dirty || fname.touched)" class="alert alert-danger">
+                  <div [hidden]="!fname.errors.required">
+                    name is required!
+                  </div>
+                  <div [hidden]="!fname.errors.minlength">
+                    length should be between 5 to 10 charecters
+                  </div>
+                  <div [hidden]="!fname.errors.maxlength">
+                    length should be between 5 to 10 charecters
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Description</label>
+                <input type="text" class="form-control" placeholder="Description..." required minlength="25" maxlength="56" name="fsDesc"
+                  [(ngModel)]="currentFeature.shortDescription" #fsDesc="ngModel">
+                <div *ngIf="fsDesc.errors && (fsDesc.dirty || fsDesc.touched)" class="alert alert-danger">
+                  <div [hidden]="!fsDesc.errors.required">
+                    description is required!
+                  </div>
+                  <div [hidden]="!fsDesc.errors.minlength">
+                    length should be between 25 to 56 charecters
+                  </div>
+                  <div [hidden]="!fsDesc.errors.maxlength">
+                    length should be between 25 to 56 charecters
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Long Description</label>
+                <textarea type="text" class="form-control" rows="3" placeholder="Long description..." required minlength="56" maxlength="500"
+                  name="flDesc" [(ngModel)]="currentFeature.longDescriptions" #flDesc="ngModel"></textarea>
+                <div *ngIf="flDesc.errors && (flDesc.dirty || flDesc.touched)" class="alert alert-danger">
+                  <div [hidden]="!flDesc.errors.required">
+                    long description is required!
+                  </div>
+                  <div [hidden]="!flDesc.errors.minlength">
+                    length should be between 56 to 150 charecters
+                  </div>
+                  <div [hidden]="!flDesc.errors.maxlength">
+                    length should be between 56 to 150 charecters
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+
+              <div class="form-group has-feedback">
+                <label>Price</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-dollar"></i>
+                  </div>
+                  <input type="text" class="form-control" placeholder="0.0" required pattern="^[1-9][0-9]*(?:\.\d*)?$" name="price" [(ngModel)]="currentFeature.price"
+                    #price="ngModel">
+                  <div *ngIf="price.errors && (price.dirty || price.touched)" class="alert alert-danger">
+                    <div [hidden]="!price.errors.required">
+                      price is required!
+                    </div>
+                    <div [hidden]="!price.errors.pattern">
+                      wrong price format
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Price For</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-dollar"></i>
+                  </div>
+                  <select class="form-control" [(ngModel)]="currentFeature.priceForPersons" required name="priceForPersons" #priceForPersons="ngModel">
+                    <option value="1">1 Person</option>
+                    <option value="2">2 Person</option>
+                    <option value="3">3 Person</option>
+                  </select>
+                  <div *ngIf="priceForPersons.errors && (priceForPersons.dirty || priceForPersons.touched)" class="alert alert-danger">
+                    <div [hidden]="!priceForPersons.errors.required">
+                      price for is required!
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="switch-container">
+                <input type="checkbox" class="switch" name="isActive" [(ngModel)]="currentFeature.isActive">
+                <label>is Active</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <br>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                  <button type="button" class="btn btn-block btn-danger btn-lg">Cancel</button>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                  <button type="submit" [disabled]="featureForm.invalid" class="btn btn-block btn-primary btn-lg">
+                    <i class="fa fa-save"></i> Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <!-- /.box-body -->
+    </div>
+
+  </section>
+  <!-- /.content -->
+</div>

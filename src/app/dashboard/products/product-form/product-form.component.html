@@ -1,0 +1,262 @@
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      {{pageTitle}}
+    </h1>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+    <div class="box box-warning">
+      <div class="box-header with-border">
+        <h3 class="box-title">Product Details</h3>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <form role="form" #productForm="ngForm" (ngSubmit)="save()">
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Name</label>
+                <input type="text" class="form-control" placeholder="Product name..." required minlength="4" maxlength="25" name="pname"
+                  [(ngModel)]="productDetails.name" #pname="ngModel">
+                <div *ngIf="pname.errors && (pname.dirty || pname.touched)" class="alert alert-danger">
+                  <div [hidden]="!pname.errors.required">
+                    name is required!
+                  </div>
+                  <div [hidden]="!pname.errors.minlength">
+                    length should be between 5 to 10 charecters
+                  </div>
+                  <div [hidden]="!pname.errors.maxlength">
+                    length should be between 5 to 10 charecters
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Description</label>
+                <input type="text" class="form-control" placeholder="Description..." required minlength="25" maxlength="56" name="psDesc"
+                  [(ngModel)]="productDetails.shortDescription" #psDesc="ngModel">
+                <div *ngIf="psDesc.errors && (psDesc.dirty || psDesc.touched)" class="alert alert-danger">
+                  <div [hidden]="!psDesc.errors.required">
+                    description is required!
+                  </div>
+                  <div [hidden]="!psDesc.errors.minlength">
+                    length should be between 25 to 56 charecters
+                  </div>
+                  <div [hidden]="!psDesc.errors.maxlength">
+                    length should be between 25 to 56 charecters
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Long Description</label>
+                <textarea type="text" class="form-control" rows="3" placeholder="Long description..." required minlength="56" maxlength="500"
+                  name="plDesc" [(ngModel)]="productDetails.longDescriptions" #plDesc="ngModel"></textarea>
+                <div *ngIf="plDesc.errors && (plDesc.dirty || plDesc.touched)" class="alert alert-danger">
+                  <div [hidden]="!plDesc.errors.required">
+                    long description is required!
+                  </div>
+                  <div [hidden]="!plDesc.errors.minlength">
+                    length should be between 56 to 150 charecters
+                  </div>
+                  <div [hidden]="!plDesc.errors.maxlength">
+                    length should be between 56 to 150 charecters
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="form-group">
+                <label>Available Features</label>
+                <select class="form-control" #selectElem (change)="onFeatureSelect(selectElem.value)">
+                  <option *ngFor="let feature of featureList | async" [value]="feature.value">
+                    {{feature.text}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Selected Features</label>
+                <ul class="todo-list ui-sortable">
+                  <li *ngFor="let feature of selectedFeatures">
+                    <span class="handle ui-sortable-handle">
+                      <i class="fa fa-ellipsis-v"></i>
+                      <i class="fa fa-ellipsis-v"></i>
+                    </span>
+                    
+                    <span class="text">{{feature.shortDescription}}</span>
+                    <small class="label label-danger">
+                      <i class="fa fa-dollar"></i> {{feature.price}}</small>
+                      <small class="label label-danger">
+                        <i class="fa fa-user"></i> For {{feature.priceForPersons}} Person(s)</small>
+                    <div class="tools">                     
+                      <i class="fa fa-trash-o" (click)="removeSelectedFeature(feature.$key)"></i>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Currency</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-dollar"></i>
+                  </div>
+                  <select class="form-control" [(ngModel)]="productDetails.currency" name="currency" #currency="ngModel">
+                    <option value="USD">USD</option>
+                    <option value="CAD">CAD</option>
+                    <option value="MXN">MXN</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Price</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-dollar"></i>
+                  </div>
+                  <input type="text" class="form-control" placeholder="0.0" required pattern="^[1-9][0-9]*(?:\.\d*)?$" name="price" [(ngModel)]="productDetails.price"
+                    #price="ngModel" (ngModelChange)="priceInfoChanged($event)">
+                  <div *ngIf="price.errors && (price.dirty || price.touched)" class="alert alert-danger">
+                    <div [hidden]="!price.errors.required">
+                      price is required!
+                    </div>
+                    <div [hidden]="!price.errors.pattern">
+                      wrong price format
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Discount</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="icon-percent"></i>
+                  </div>
+                  <input type="text" class="form-control" placeholder="0.0" required pattern="^0\.\d{1,3}$" name="discount" [(ngModel)]="productDetails.discount"
+                    #discount="ngModel" (ngModelChange)="discountChanged($event)">
+                  <div *ngIf="discount.errors && (discount.dirty || discount.touched)" class="alert alert-danger">
+                    <div [hidden]="!discount.errors.required">
+                      discount is required!
+                    </div>
+                    <div [hidden]="!discount.errors.pattern">
+                      wrong discount format
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Discounted price</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-dollar"></i>
+                  </div>
+                  <span class="form-control" disabled="">{{this.productDetails.discountPrice}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Tax</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="icon-percent"></i>
+                  </div>
+                  <input type="text" class="form-control" placeholder="0.0" required pattern="^\d+\.\d*$" name="tax" [(ngModel)]="productDetails.taxPer"
+                    #tax="ngModel" (ngModelChange)="taxChanged($event)">
+                  <div *ngIf="tax.errors && (tax.dirty || tax.touched)" class="alert alert-danger">
+                    <div [hidden]="!tax.errors.required">
+                      tax is required!
+                    </div>
+                    <div [hidden]="!tax.errors.pattern">
+                      wrong tax format
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Coustomer pays</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="fa fa-dollar"></i>
+                  </div>
+                  <span class="form-control" disabled="">{{productDetails.finalPrice}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="switch-container">
+                <input type="checkbox" class="switch" name="isHot" [(ngModel)]="productDetails.isHot">
+                <label>is Hot</label>
+              </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="switch-container">
+                <input type="checkbox" class="switch" name="isActive" [(ngModel)]="productDetails.isActive">
+                <label>is Active</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <br>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                  <button type="button" class="btn btn-block btn-danger btn-lg">Cancel</button>
+                </div>
+                <div class="col-lg-6 col-md-6 col-xs-12">
+                  <button type="submit" [disabled]="productForm.invalid" class="btn btn-block btn-primary btn-lg">
+                    <i class="fa fa-save"></i> Save</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <!-- /.box-body -->
+    </div>
+
+  </section>
+  <!-- /.content -->
+</div>
