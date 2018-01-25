@@ -9,6 +9,8 @@ import { ProductListComponent } from '../products/product-list/product-list.comp
 import { OrderListComponent } from '../orders/order-list/order-list.component';
 import { FeatureListComponent } from '../features/feature-list/feature-list.component';
 import { FeatureFormComponent } from '../features/feature-form/feature-form.component';
+import { ProductImageListComponent } from '../product-images/product-image-list/product-image-list.component';
+import { ProductImageFormComponent } from '../product-images/product-image-form/product-image-form.component';
 
 
 const childRoutes: Routes = [
@@ -60,6 +62,16 @@ const childRoutes: Routes = [
       {
         path: 'aditfeature/:id',
         component: FeatureFormComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'productimagelist',
+        component: ProductImageListComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'addproductimage/new',
+        component: ProductImageFormComponent,
         canActivate: [AuthGuard]
       },
     ]

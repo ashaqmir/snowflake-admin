@@ -1,3 +1,4 @@
+import { ProductImageModule } from './product-images/shared/product-image.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
@@ -17,6 +18,9 @@ import { FeatureListComponent } from './features/feature-list/feature-list.compo
 import { FeatureDetailsComponent } from './features/feature-details/feature-details.component';
 import { FeatureFormComponent } from './features/feature-form/feature-form.component';
 import { FeatureModule } from './features/shared/feature.module';
+import { ProductImageFormComponent } from './product-images/product-image-form/product-image-form.component';
+import { ProductImageDetailsComponent } from './product-images/product-image-details/product-image-details.component';
+import { ProductImageListComponent } from './product-images/product-image-list/product-image-list.component';
 
 @NgModule({
   imports: [
@@ -25,7 +29,8 @@ import { FeatureModule } from './features/shared/feature.module';
     DashboardRoutingModule,
     ProductModule,
     OrderModule,
-    FeatureModule
+    FeatureModule,
+    ProductImageModule
   ],
   declarations: [
     DashboardComponent,
@@ -41,7 +46,10 @@ import { FeatureModule } from './features/shared/feature.module';
     OrderDetailsComponent,
     FeatureListComponent,
     FeatureDetailsComponent,
-    FeatureFormComponent
+    FeatureFormComponent,
+    ProductImageFormComponent,
+    ProductImageDetailsComponent,
+    ProductImageListComponent
   ]
 })
 export class DashboardModule { }

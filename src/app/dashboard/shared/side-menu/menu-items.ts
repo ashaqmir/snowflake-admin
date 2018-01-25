@@ -16,6 +16,12 @@ const menuItems = [
         target: 'dashboard/featurelist',
         isActive: false,
         icon: 'fa-list'
+    },
+    {
+        caption: 'Product Images',
+        target: 'dashboard/productimagelist',
+        isActive: false,
+        icon: 'fa-file-image-o'
     }
 ];
 

@@ -53,4 +53,8 @@ export class FeatureFormComponent implements OnInit {
     }
     console.log(this.currentFeature);
   }
+
+  back() {
+    this.router.navigate(['/dashboard/featurelist']);
+  }
 }

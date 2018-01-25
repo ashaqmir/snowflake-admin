@@ -152,4 +152,8 @@ export class ProductFormComponent implements OnInit {
       this.productDetails.finalPrice = this.productDetails.discountPrice;
     }
   }
+
+  back() {
+    this.router.navigate(['/dashboard/productlist']);
+  }
 }
