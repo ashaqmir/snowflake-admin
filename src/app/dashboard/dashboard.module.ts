@@ -19,8 +19,8 @@ import { FeatureDetailsComponent } from './features/feature-details/feature-deta
 import { FeatureFormComponent } from './features/feature-form/feature-form.component';
 import { FeatureModule } from './features/shared/feature.module';
 import { ProductImageFormComponent } from './product-images/product-image-form/product-image-form.component';
-import { ProductImageDetailsComponent } from './product-images/product-image-details/product-image-details.component';
 import { ProductImageListComponent } from './product-images/product-image-list/product-image-list.component';
+import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
 
 @NgModule({
   imports: [
@@ -48,8 +48,8 @@ import { ProductImageListComponent } from './product-images/product-image-list/p
     FeatureDetailsComponent,
     FeatureFormComponent,
     ProductImageFormComponent,
-    ProductImageDetailsComponent,
-    ProductImageListComponent
+    ProductImageListComponent,
+    LoadingSpinnerComponent,
   ]
 })
 export class DashboardModule { }

@@ -1,60 +1,87 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { AngularFireList, AngularFireObject, AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { Promise, resolve } from 'q';
 import { IFeature } from '../../../models/feature';
-
+import { IProductImage } from '../../../models/product-image';
+import * as firebase from 'firebase';
 
 @Injectable()
 export class ProductImageService {
 
-  private basePath = '/Features';
-  featuresRef: AngularFireList<IFeature>;
+  uploadChange: EventEmitter<string> = new EventEmitter();
 
-  constructor(private db: AngularFireDatabase) {
-    this.featuresRef = db.list(this.basePath);
-  }
+  basePath = 'ProductImages';
+  productImages: Observable<IProductImage[]>;
 
-  // Return an observable list of products
-  getFeatureList(): Observable<IFeature[]> {
-    return this.featuresRef.snapshotChanges().map((arr) => {
-      return arr.map((snap) => Object.assign(snap.payload.val(), { $key: snap.key }));
+  constructor(private db: AngularFireDatabase) { }
+
+  getProductImages() {
+    this.productImages = this.db.list(this.basePath).snapshotChanges().map((actions) => {
+      return actions.map((a) => {
+        const data = a.payload.val();
+        const $key = a.payload.key;
+        return { $key, ...data };
+      });
     });
+    return this.productImages;
   }
 
-  // Return a single observable item
-  getFeature(key: string): Observable<IFeature | null> {
-    const featurePath = `${this.basePath}/${key}`;
-    const feature = this.db.object(featurePath).valueChanges() as Observable<IFeature | null>;
-    return feature;
+  deleteProductImage(productImage: IProductImage) {
+    this.deleteFileData(productImage.$key)
+      .then(() => {
+        this.deleteFileStorage(productImage.name);
+      })
+      .catch((error) => console.log(error));
   }
 
-  // Create a brand new product
-  createFeature(feature: IFeature): PromiseLike<any> {
-    return this.featuresRef.push(feature).then(prod => {
-      if (prod) {
-        return resolve(prod);
-      }
-    });
+
+  pushProductImage(productImage: IProductImage) {
+    const storageRef = firebase.storage().ref();
+    const uploadTask = storageRef.child(`${this.basePath}/${productImage.file.name}`).put(productImage.file);
+
+    this.emitUploadEvent('STARTED');
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+      (snapshot) => {
+        productImage.progress = (uploadTask.snapshot.bytesTransferred / uploadTask.snapshot.bytesTransferred) * 100;
+      },
+      (error) => {
+        // upload failed
+        console.log(error);
+        this.emitUploadEvent('ERROR');
+      },
+      () => {
+        // upload success
+        if (uploadTask.snapshot.downloadURL) {
+          productImage.url = uploadTask.snapshot.downloadURL;
+          productImage.name = productImage.file.name;
+          this.saveFileData(productImage).then(data => {
+            this.emitUploadEvent('COMPLETED');
+          });
+        } else {
+          console.error('No download URL!');
+        }
+      },
+    );
   }
 
-  // Update an exisiting product
-  updateFeature(key: string, value: any): void {
-    this.featuresRef.update(key, value);
+  private saveFileData(productImage: IProductImage): PromiseLike<any> {
+    return this.db.list(`${this.basePath}/`).push(productImage);
   }
 
-  // Deletes a single product
-  deleteFeature(key: string): void {
-    this.featuresRef.remove(key);
+  private deleteFileData(key: string) {
+    return this.db.list(`${this.basePath}/`).remove(key);
   }
 
-  // Deletes the entire list of products
-  deleteAll(): void {
-    this.featuresRef.remove();
+  private deleteFileStorage(name: string) {
+    const storageRef = firebase.storage().ref();
+    storageRef.child(`${this.basePath}/${name}`).delete();
   }
 
-  // Default error handling for all actions
-  private handleError(error: Error) {
-    console.error(error);
+  emitUploadEvent(status) {
+    this.uploadChange.emit(status);
+  }
+  getChangeEmitter() {
+    return this.uploadChange;
   }
 }

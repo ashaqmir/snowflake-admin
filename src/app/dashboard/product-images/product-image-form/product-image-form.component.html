@@ -11,7 +11,7 @@
 
     <div class="box box-warning">
       <div class="box-header with-border">
-        <h3 class="box-title">Feature Details</h3>
+        <h3 class="box-title">Product Image Details</h3>
       </div>
       <!-- /.box-header -->
       <div class="box-body">
@@ -20,17 +20,17 @@
             <div class="col-lg-6 col-md-6 col-xs-12">
               <div class="form-group has-feedback">
                 <label>Name</label>
-                <input type="text" class="form-control" placeholder="Feature name..." required minlength="4" maxlength="25" name="fname"
-                  [(ngModel)]="currentImage.name" #fname="ngModel">
-                <div *ngIf="fname.errors && (fname.dirty || fname.touched)" class="alert alert-danger">
-                  <div [hidden]="!fname.errors.required">
+                <input type="text" class="form-control" placeholder="Image tags..." required minlength="4" maxlength="100" name="imgTag"
+                  [(ngModel)]="currentImage.tags" #imgTag="ngModel"  data-toggle="tooltip" title="Use ',' (comma) to sperate the tags.">
+                <div *ngIf="imgTag.errors && (imgTag.dirty || imgTag.touched)" class="alert alert-danger">
+                  <div [hidden]="!imgTag.errors.required">
                     name is required!
                   </div>
-                  <div [hidden]="!fname.errors.minlength">
-                    length should be between 5 to 10 charecters
+                  <div [hidden]="!imgTag.errors.minlength">
+                    length should be between 4 to 100 charecters
                   </div>
-                  <div [hidden]="!fname.errors.maxlength">
-                    length should be between 5 to 10 charecters
+                  <div [hidden]="!imgTag.errors.maxlength">
+                    length should be between 4 to 100 charecters
                   </div>
                 </div>
               </div>
@@ -74,17 +74,39 @@
 
           <div class="row">
             <div class="col-lg-6 col-md-6 col-xs-12">
+              <!-- Progress bar -->
+              <div *ngIf="showProgress" class="progress-group">
+                <span class="progress-text">Uploading Image</span>
+                <span class="progress-number">
+                  <b>{{currentImage.progress}}</b>/100</span>
+                <div class="progress sm">
+                  <div class="progress-bar progress-bar-success progress-bar-striped" [ngStyle]="{'width': currentImage.progress + '%'}"></div>
+                </div>
+              </div>
+
+              <!-- Success Message -->
+              <div *ngIf="showSuccessMessage" class="alert alert-success alert-dismissible">
+                <h4>
+                  <i class="icon fa fa-check"></i> Uploaded!</h4>
+                Product image uploaded scuccessfully.
+              </div>
+
+
+              <!-- Error Message -->
+              <div *ngIf="showUploadError" class="alert alert-danger alert-dismissible">
+                <h4>
+                  <i class="icon fa fa-ban"></i> Failed</h4>
+                Sorry, something went wrong while uploading your image..
+              </div>
             </div>
             <div class="col-lg-6 col-md-6 col-xs-12">
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-xs-12">
-                  <button type="button" class="btn btn-block btn-danger btn-lg">Cancel</button>
+                  <button type="button" class="btn btn-block btn-danger btn-lg" (click)="back()">Cancel</button>
                 </div>
-
-                <p> {{imageForm.invalid}} {{fileSelectedinValid}} {{imageForm.invalid && fileSelectedinValid}}</p>
                 <!-- imageForm.invalid && -->
                 <div class="col-lg-6 col-md-6 col-xs-12">
-                  <button type="submit" [disabled]="imageForm.invalid && fileSelectedinValid" class="btn btn-block btn-primary btn-lg">
+                  <button type="submit" [disabled]="!(imageForm.valid  && fileSelectedIsValid)" class="btn btn-block btn-primary btn-lg">
                     <i class="fa fa-save"></i> Save</button>
                 </div>
               </div>

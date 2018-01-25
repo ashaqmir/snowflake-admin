@@ -13,13 +13,14 @@ import { AuthService } from './core/auth.service';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AppStateService } from './core/app-state.service';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 export const firebaseConfig = environment.firebaseConfig;
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
