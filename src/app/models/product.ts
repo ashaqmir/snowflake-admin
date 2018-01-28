@@ -1,4 +1,5 @@
 import { IFeature } from './feature';
+import { IProductImage } from './product-image';
 
 export class IProduct {
     $key: string;
@@ -6,7 +7,7 @@ export class IProduct {
     shortDescription: string;
     longDescriptions: string;
     features: IFeature[];
-
+    images: IProductImage[];
     currency: string;
     price = 0.0;
     taxPer = 0.0;

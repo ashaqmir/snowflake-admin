@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import { IFeature } from '../../../models/feature';
 import { FeatureService } from '../../features/shared/feature.service';
 import { async } from '@angular/core/testing';
+import { ProductImageService } from '../../product-images/shared/product-image.service';
+import { IProductImage } from '../../../models/product-image';
 
 @Component({
   selector: 'app-product-form',
@@ -17,15 +19,24 @@ export class ProductFormComponent implements OnInit {
   pageTitle: string;
   productKey: string;
   public productDetails: IProduct = new IProduct();
+
   totalPrice: number;
   features: Observable<IFeature[]>;
   featureList: any = [];
-  // selectedFeatures: IFeature[];
   selectedFeatures: Array<IFeature> = [];
+
+  productImages: Observable<IProductImage[]>;
+  productImageList: any = [];
+  selectedImages: Array<IProductImage> = [];
+
+
+
   constructor(private prodSvc: ProductService,
     private router: Router,
     private route: ActivatedRoute,
-    private featureSvc: FeatureService) {
+    private featureSvc: FeatureService,
+    private productImageSvc: ProductImageService) {
+
     this.features = this.featureSvc.getFeatureList();
 
     this.featureList = this.features.map(res => {
@@ -33,6 +44,18 @@ export class ProductFormComponent implements OnInit {
         return {
           value: ftr.$key,
           text: ftr.shortDescription
+        };
+      });
+    });
+
+
+    this.productImages = this.productImageSvc.getProductImages();
+
+    this.productImageList = this.productImages.map(res => {
+      return res.map(img => {
+        return {
+          value: img.$key,
+          text: img.location + ' [' + img.tags + ']',
         };
       });
     });
@@ -56,6 +79,7 @@ export class ProductFormComponent implements OnInit {
 
 
           this.selectedFeatures = this.productDetails.features;
+          this.selectedImages = this.productDetails.images;
         }
       });
     });
@@ -74,6 +98,18 @@ export class ProductFormComponent implements OnInit {
       ftr.$key = undefined;
       delete (ftr.$key);
       this.productDetails.features.push(ftr);
+    });
+
+    if (this.productDetails.images && this.productDetails.images.length > 0) {
+      this.productDetails.images = [];
+    }
+    if (!this.productDetails.images) {
+      this.productDetails.images = [];
+    }
+    this.selectedImages.forEach(img => {
+      img.$key = undefined;
+      delete (img.$key);
+      this.productDetails.images.push(img);
     });
     // this.productDetails.features = this.selectedFeatures;
 
@@ -105,11 +141,33 @@ export class ProductFormComponent implements OnInit {
 
     }
   }
+  onImageSelect(val) {
+    console.log(val);
+    if (val) {
+      const prodImages = this.productImages.map(res => {
+        return res.find(img => img.$key === val);
+      });
 
+      prodImages.subscribe(res => {
+        const existingElm = this.selectedImages.find(ftr => ftr.$key === res.$key);
+        if (!existingElm) {
+          this.selectedImages.push(res as IProductImage);
+        }
+      });
+
+    }
+  }
   removeSelectedFeature(val) {
     const existingElmIndex = this.selectedFeatures.findIndex(ftr => ftr.$key === val);
     if (existingElmIndex >= 0) {
       this.selectedFeatures.splice(existingElmIndex, 1);
+    }
+  }
+
+  removeSelectedImage(val) {
+    const existingElmIndex = this.selectedImages.findIndex(img => img.$key === val);
+    if (existingElmIndex >= 0) {
+      this.selectedImages.splice(existingElmIndex, 1);
     }
   }
 

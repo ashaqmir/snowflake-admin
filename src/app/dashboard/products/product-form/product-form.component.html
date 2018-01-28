@@ -109,6 +109,34 @@
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="form-group">
+                <label>Available Images</label>
+                <select class="form-control" #selectElem (change)="onImageSelect(selectElem.value)">
+                  <option *ngFor="let image of productImageList | async" [value]="image.value">
+                    {{image.text}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Selected Images</label>
+                <ul class="todo-list ui-sortable">
+                  <li *ngFor="let image of selectedImages">
+                    <img class="prod-image" [src]="image.url" alt="message user image">                   
+                    <span class="text">{{image.tags}}</span>
+                    <small class="label label-danger">
+                      <i class="fa fa-location-arrow"></i> {{image.location}}</small>                      
+                    <div class="tools">                     
+                      <i class="fa fa-trash-o" (click)="removeSelectedImage(image.$key)"></i>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
           <div class="row">
             <div class="col-lg-6 col-md-6 col-xs-12">
