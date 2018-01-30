@@ -19,12 +19,10 @@ export class SideMenuComponent implements OnInit {
   ngOnInit() {
     this.user = this.appState.userProfile;
     this.menus = menuItems;
-    console.log(this.menus);
   }
   activateMe(cap) {
     const mitem = this.menus.find(m => m.caption === cap);
     if (mitem) {
-      console.log(mitem);
       mitem.isActive = true;
     }
   }

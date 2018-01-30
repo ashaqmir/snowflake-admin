@@ -10,6 +10,7 @@ export class FeatureService {
 
   private basePath = '/Features';
   featuresRef: AngularFireList<IFeature>;
+  productFeatures: Observable<IFeature[]>;
 
   constructor(private db: AngularFireDatabase) {
     this.featuresRef = db.list(this.basePath);
@@ -20,6 +21,17 @@ export class FeatureService {
     return this.featuresRef.snapshotChanges().map((arr) => {
       return arr.map((snap) => Object.assign(snap.payload.val(), { $key: snap.key }));
     });
+    // if (this.productFeatures) {
+    //   return this.productFeatures;
+    // }
+    // this.productFeatures = this.db.list(this.basePath).snapshotChanges().map((actions) => {
+    //   return actions.map((a) => {
+    //     const data = a.payload.val();
+    //     const $key = a.payload.key;
+    //     return { $key, ...data };
+    //   });
+    // });
+    // return this.productFeatures;
   }
 
   // Return a single observable item

@@ -79,8 +79,8 @@
             <div class="col-lg-6 col-md-6 col-xs-12">
               <div class="form-group">
                 <label>Available Features</label>
-                <select class="form-control" #selectElem (change)="onFeatureSelect(selectElem.value)">
-                  <option *ngFor="let feature of featureList | async" [value]="feature.value">
+                <select class="form-control" #featureElem (change)="onFeatureSelect(featureElem.value)">
+                  <option *ngFor="let feature of productFeatureList | async" [value]="feature.value">
                     {{feature.text}}
                   </option>
                 </select>
@@ -95,13 +95,13 @@
                       <i class="fa fa-ellipsis-v"></i>
                       <i class="fa fa-ellipsis-v"></i>
                     </span>
-                    
-                    <span class="text">{{feature.shortDescription}}</span>
+
+                    <span class="text">{{feature?.shortDescription}}</span>
                     <small class="label label-danger">
-                      <i class="fa fa-dollar"></i> {{feature.price}}</small>
-                      <small class="label label-danger">
-                        <i class="fa fa-user"></i> For {{feature.priceForPersons}} Person(s)</small>
-                    <div class="tools">                     
+                      <i class="fa fa-dollar"></i> {{feature?.price}}</small>
+                    <small class="label label-danger">
+                      <i class="fa fa-user"></i> For {{feature?.priceForPersons}} Person(s)</small>
+                    <div class="tools">
                       <i class="fa fa-trash-o" (click)="removeSelectedFeature(feature.$key)"></i>
                     </div>
                   </li>
@@ -113,7 +113,7 @@
             <div class="col-lg-6 col-md-6 col-xs-12">
               <div class="form-group">
                 <label>Available Images</label>
-                <select class="form-control" #selectElem (change)="onImageSelect(selectElem.value)">
+                <select class="form-control" #imageElem (change)="onImageSelect(imageElem.value)">
                   <option *ngFor="let image of productImageList | async" [value]="image.value">
                     {{image.text}}
                   </option>
@@ -125,11 +125,11 @@
                 <label>Selected Images</label>
                 <ul class="todo-list ui-sortable">
                   <li *ngFor="let image of selectedImages">
-                    <img class="prod-image" [src]="image.url" alt="message user image">                   
+                    <img class="prod-image" [src]="image.url" alt="message user image">
                     <span class="text">{{image.tags}}</span>
                     <small class="label label-danger">
-                      <i class="fa fa-location-arrow"></i> {{image.location}}</small>                      
-                    <div class="tools">                     
+                      <i class="fa fa-location-arrow"></i> {{image.location}}</small>
+                    <div class="tools">
                       <i class="fa fa-trash-o" (click)="removeSelectedImage(image.$key)"></i>
                     </div>
                   </li>

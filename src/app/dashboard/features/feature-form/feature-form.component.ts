@@ -14,7 +14,7 @@ export class FeatureFormComponent implements OnInit {
   pageTitle: string;
   featureKey: string;
 
-  currentFeature: IFeature = new IFeature('', '', '', 0, 0.0, false);
+  currentFeature: IFeature = new IFeature();
 
   constructor(private featureSvc: FeatureService,
     private router: Router,

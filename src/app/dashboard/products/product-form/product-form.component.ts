@@ -3,6 +3,7 @@ import { ProductService } from '../shared/product.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IProduct } from '../../../models/product';
 import { Observable } from 'rxjs/Observable';
+import { forkJoin } from 'rxjs/observable/forkJoin';
 import { IFeature } from '../../../models/feature';
 import { FeatureService } from '../../features/shared/feature.service';
 import { async } from '@angular/core/testing';
@@ -21,9 +22,12 @@ export class ProductFormComponent implements OnInit {
   public productDetails: IProduct = new IProduct();
 
   totalPrice: number;
-  features: Observable<IFeature[]>;
-  featureList: any = [];
+
+  productFeatures: Observable<IFeature[]>;
+  productFeatureList: any = [];
   selectedFeatures: Array<IFeature> = [];
+
+
 
   productImages: Observable<IProductImage[]>;
   productImageList: any = [];
@@ -37,9 +41,8 @@ export class ProductFormComponent implements OnInit {
     private featureSvc: FeatureService,
     private productImageSvc: ProductImageService) {
 
-    this.features = this.featureSvc.getFeatureList();
-
-    this.featureList = this.features.map(res => {
+    this.productFeatures = this.featureSvc.getFeatureList();
+    this.productFeatureList = this.productFeatures.map(res => {
       return res.map(ftr => {
         return {
           value: ftr.$key,
@@ -47,10 +50,12 @@ export class ProductFormComponent implements OnInit {
         };
       });
     });
+  }
+
+  ngOnInit() {
 
 
     this.productImages = this.productImageSvc.getProductImages();
-
     this.productImageList = this.productImages.map(res => {
       return res.map(img => {
         return {
@@ -59,9 +64,7 @@ export class ProductFormComponent implements OnInit {
         };
       });
     });
-  }
 
-  ngOnInit() {
     const key = this.route.params.subscribe(params => {
       this.productKey = params['id'];
       console.log(this.productKey);
@@ -83,8 +86,6 @@ export class ProductFormComponent implements OnInit {
         }
       });
     });
-    console.log('fature list');
-    console.log(this.featureList);
   }
 
   save() {
@@ -128,17 +129,20 @@ export class ProductFormComponent implements OnInit {
   onFeatureSelect(val) {
     console.log(val);
     if (val) {
-      const selectedFeature = this.features.map(res => {
+      const prodFeature = this.productFeatures.map(res => {
         return res.find(ftr => ftr.$key === val);
       });
 
-      selectedFeature.subscribe(res => {
-        const existingElm = this.selectedFeatures.find(ftr => ftr.$key === res.$key);
+      console.log('step 1');
+      const subs = prodFeature.subscribe(result => {
+        console.log('step 2');
+        const existingElm = this.selectedFeatures.find(ftr => ftr.$key === result.$key);
+        console.log(existingElm);
         if (!existingElm) {
-          this.selectedFeatures.push(res as IFeature);
+          console.log('step 3');
+          this.selectedFeatures.push(result as IFeature);
         }
       });
-
     }
   }
   onImageSelect(val) {
@@ -149,8 +153,12 @@ export class ProductFormComponent implements OnInit {
       });
 
       prodImages.subscribe(res => {
-        const existingElm = this.selectedImages.find(ftr => ftr.$key === res.$key);
+        console.log('Selected Images:');
+        console.log(this.selectedImages);
+        const existingElm = this.selectedImages.find(img => img.$key === res.$key);
+        console.log(existingElm);
         if (!existingElm) {
+          console.log(res);
           this.selectedImages.push(res as IProductImage);
         }
       });
