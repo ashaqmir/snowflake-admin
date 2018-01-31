@@ -245,14 +245,43 @@
           </div>
 
           <div class="row">
-            <div class="col-lg-6 col-md-6 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Persons</label>
+                <!-- <input type="number" class="form-control" placeholder="Product name..." required minlength="4" maxlength="25" name="pname"
+                    [(ngModel)]="productDetails.name" #pname="ngModel"> -->
+                <div class="input-group">
+                  <div class="row">
+                    <div class="col-lg-3 col-md-3 col-xs-12" >
+                      <code class="input-group-addon">{{productDetails.pricefor}} </code>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-xs-12" style="vertical-align: middle; padding-top:6px">
+                      <input type="range" class="slider" [(ngModel)]="productDetails.pricefor" name="priceFor" #priceFor="ngModel" required min="1"
+                        max="20" step="1">
+                      <div *ngIf="priceFor.errors && (priceFor.dirty || priceFor.touched)" class="alert alert-danger">
+                        <div [hidden]="!priceFor.errors.required">
+                          name is required!
+                        </div>
+                        <div [hidden]="!priceFor.errors.min">
+                          number should be between 1 and 20
+                        </div>
+                        <div [hidden]="!priceFor.errors.max">
+                          number should be between 1 and 20
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-xs-12">
               <div class="switch-container">
                 <input type="checkbox" class="switch" name="isHot" [(ngModel)]="productDetails.isHot">
                 <label>is Hot</label>
               </div>
             </div>
 
-            <div class="col-lg-6 col-md-6 col-xs-12">
+            <div class="col-lg-3 col-md-3 col-xs-12">
               <div class="switch-container">
                 <input type="checkbox" class="switch" name="isActive" [(ngModel)]="productDetails.isActive">
                 <label>is Active</label>

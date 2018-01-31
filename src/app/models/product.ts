@@ -15,6 +15,8 @@ export class IProduct {
     discountPrice = 0.0;
     finalPrice = 0.0;
 
+    pricefor = 1;
+
     includes: string;
     isHot: boolean;
     enabled: boolean;
