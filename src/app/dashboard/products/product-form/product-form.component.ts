@@ -53,8 +53,6 @@ export class ProductFormComponent implements OnInit {
   }
 
   ngOnInit() {
-
-
     this.productImages = this.productImageSvc.getProductImages();
     this.productImageList = this.productImages.map(res => {
       return res.map(img => {
