@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { Router } from '@angular/router';
+import 'rxjs/add/operator/take';
+import 'rxjs/add/operator/do';
+import { Router, ActivatedRoute } from '@angular/router';
 import { CustomerService } from '../shared/customer.service';
 import { IProfile } from '../../../models/profile';
 
@@ -11,20 +13,35 @@ import { IProfile } from '../../../models/profile';
 })
 export class CustomerListComponent implements OnInit {
   customers: Observable<IProfile[]>;
+  singleCustomer: IProfile;
   customerPhone: string;
   customerEmail: string;
+  customerKey: string;
+  single = false;
+  constructor(
+    private customerSvc: CustomerService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
-  constructor(private customerSvc: CustomerService, private router: Router) {
-    this.customers = this.customerSvc.getCustomerList();
+  ngOnInit() {
+    const key = this.route.params.subscribe(params => {
+      this.customerKey = params['id'];
+      console.log(this.customerKey);
+      if (this.customerKey) {
+        this.customerSvc.getProfile(this.customerKey).take(1).do(cstmr => {
+          this.singleCustomer = cstmr;
+          this.single = true;
+        }).subscribe();
+      } else {
+        this.customers = this.customerSvc.getCustomerList();
+        this.single = false;
+      }
+    });
+
   }
 
-  ngOnInit() { }
-  
-  clearFilter() {
-    
-  }
+  clearFilter() {}
 
-  search() {
-    
-  }
+  search() {}
 }

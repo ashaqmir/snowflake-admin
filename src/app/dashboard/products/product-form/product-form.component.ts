@@ -1,19 +1,19 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { ProductService } from "../shared/product.service";
-import { Router, ActivatedRoute } from "@angular/router";
-import { IProduct } from "../../../models/product";
-import { Observable } from "rxjs/Observable";
-import { forkJoin } from "rxjs/observable/forkJoin";
-import { IFeature } from "../../../models/feature";
-import { FeatureService } from "../../features/shared/feature.service";
-import { async } from "@angular/core/testing";
-import { ProductImageService } from "../../product-images/shared/product-image.service";
-import { IProductImage } from "../../../models/product-image";
+import { Component, OnInit, Input } from '@angular/core';
+import { ProductService } from '../shared/product.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { IProduct } from '../../../models/product';
+import { Observable } from 'rxjs/Observable';
+import { forkJoin } from 'rxjs/observable/forkJoin';
+import { IFeature } from '../../../models/feature';
+import { FeatureService } from '../../features/shared/feature.service';
+import { async } from '@angular/core/testing';
+import { ProductImageService } from '../../product-images/shared/product-image.service';
+import { IProductImage } from '../../../models/product-image';
 
 @Component({
-  selector: "app-product-form",
-  templateUrl: "./product-form.component.html",
-  styleUrls: ["./product-form.component.css"]
+  selector: 'app-product-form',
+  templateUrl: './product-form.component.html',
+  styleUrls: ['./product-form.component.css']
 })
 export class ProductFormComponent implements OnInit {
   pageTitle: string;
@@ -54,15 +54,15 @@ export class ProductFormComponent implements OnInit {
       return res.map(img => {
         return {
           value: img.$key,
-          text: img.location + " [" + img.tags + "]"
+          text: img.location + ' [' + img.tags + ']'
         };
       });
     });
 
     const key = this.route.params.subscribe(params => {
-      this.productKey = params["id"];
+      this.productKey = params['id'];
       console.log(this.productKey);
-      this.pageTitle = this.productKey ? "Edit Product" : "Add Product";
+      this.pageTitle = this.productKey ? 'Edit Product' : 'Add Product';
 
       if (!this.productKey) {
         return;
@@ -111,11 +111,11 @@ export class ProductFormComponent implements OnInit {
 
     if (!this.productKey) {
       this.prodSvc.createProduct(this.productDetails).then(prod => {
-        this.router.navigate(["/dashboard/productlist"]);
+        this.router.navigate(['/dashboard/productlist']);
       });
     } else {
       this.prodSvc.updateProduct(this.productKey, this.productDetails);
-      this.router.navigate(["/dashboard/productlist"]);
+      this.router.navigate(['/dashboard/productlist']);
     }
     console.log(this.productDetails);
     // console.log(product);
@@ -128,15 +128,15 @@ export class ProductFormComponent implements OnInit {
         return res.find(ftr => ftr.$key === val);
       });
 
-      console.log("step 1");
+      console.log('step 1');
       const subs = prodFeature.subscribe(result => {
-        console.log("step 2");
+        console.log('step 2');
         const existingElm = this.selectedFeatures.find(
           ftr => ftr.$key === result.$key
         );
         console.log(existingElm);
         if (!existingElm) {
-          console.log("step 3");
+          console.log('step 3');
           this.selectedFeatures.push(result as IFeature);
         }
       });
@@ -150,7 +150,7 @@ export class ProductFormComponent implements OnInit {
       });
 
       prodImages.subscribe(res => {
-        console.log("Selected Images:");
+        console.log('Selected Images:');
         console.log(this.selectedImages);
         const existingElm = this.selectedImages.find(
           img => img.$key === res.$key

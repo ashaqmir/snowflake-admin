@@ -83,6 +83,11 @@ const childRoutes: Routes = [
         canActivate: [AuthGuard]
       },
       {
+        path: 'customerlist/:id',
+        component: CustomerListComponent,
+        canActivate: [AuthGuard]
+      },
+      {
         path: 'bannerimagelist',
         component: AppBannerImageListComponent,
         canActivate: [AuthGuard]

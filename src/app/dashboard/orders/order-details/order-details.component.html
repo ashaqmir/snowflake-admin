@@ -33,7 +33,7 @@
                 </li>
                 <li class="list-group-item">
                   <b>UID</b>
-                  <a class="pull-right">{{order.customerId}}</a>
+                  <a class="pull-right" [href]="'./dashboard/customerlist/' + order.customerId">{{order.customerId}}</a>
                 </li>
               </ul>
             </div>

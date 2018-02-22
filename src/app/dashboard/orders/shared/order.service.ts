@@ -13,7 +13,9 @@ export class OrderService {
 
   ordersRef: AngularFireList<IOrder>;
   constructor(private db: AngularFireDatabase) {
-    this.ordersRef = db.list(this.basePath);
+    this.ordersRef = db.list(this.basePath, ref =>
+      ref.orderByChild('createdAt')
+    );
   }
 
   // Return an observable list of products

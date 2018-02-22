@@ -53,9 +53,14 @@
     </div>
     <!-- /.box -->
 
+    <ng-container *ngIf="!single">
+      <div *ngFor="let customer of customers | async" class="row">
+        <app-customer-details [customer]='customer'></app-customer-details>
+      </div>
+    </ng-container>
 
-    <div *ngFor="let customer of customers | async" class="row">
-      <app-customer-details [customer]='customer'></app-customer-details>
+    <div *ngIf="single" class="row">
+      <app-customer-details [customer]='singleCustomer'></app-customer-details>
     </div>
 
   </section>
