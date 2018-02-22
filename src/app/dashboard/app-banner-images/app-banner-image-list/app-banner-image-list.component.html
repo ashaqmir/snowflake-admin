@@ -2,7 +2,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1 style="display: inline-flex">
-      Product Images
+      Application Banner Images
     </h1>
 
     <div class="box-tools pull-right">
@@ -23,26 +23,14 @@
       <!-- /.box-header -->
       <div class="box-body">
         <div class="row" style="vertical-align: middle">
-          <div class="col-lg-6 col-md-6 col-xs-12">
+          <div class="col-lg-12 col-md-12 col-xs-12">
             <div class="form-group has-feedback">
-              <label>Image tag</label>
+              <label>Image Title</label>
               <div class="input-group">
                 <div class="input-group-addon">
                   <i class="fa fa-image"></i>
                 </div>
-                <input type="text" class="form-control" placeholder="Image tag.." [(ngModel)]="imgTag">
-              </div>
-            </div>
-          </div>
-          <!-- /.col -->
-          <div class="col-lg-6 col-md-6 col-xs-12">
-            <div class="form-group has-feedback">
-              <label>Image location</label>
-              <div class="input-group">
-                <div class="input-group-addon">
-                  <i class="fa fa-dot-circle-o"></i>
-                </div>
-                <input type="text" class="form-control" placeholder="Image location..." [(ngModel)]="imgLocation">
+                <input type="text" class="form-control" placeholder="Image tag.." [(ngModel)]="title">
               </div>
             </div>
           </div>
@@ -83,8 +71,7 @@
                 <div [ngClass]="{'item': true, 'active': idx === 0 }" *ngFor="let prdImg of currentImages | async; let idx = index " ng-class="active">
                   <img src="{{prdImg?.url }}" alt="prdImg.name" style="width:100%;">
                   <div class="carousel-caption">
-                    <h3>{{prdImg.location}}</h3>
-                    <p>{{prdImg.tags}}</p>
+                    <h3>{{prdImg.title}}</h3>
                     <button type="submit" class="btn btn-danger" (click)="deleteImage(prdImg)">
                       <i class="fa fa-trash-o"></i>
                     </button>

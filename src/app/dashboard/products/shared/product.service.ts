@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { AngularFireList, AngularFireObject, AngularFireDatabase } from 'angularfire2/database';
+import {
+  AngularFireList,
+  AngularFireObject,
+  AngularFireDatabase
+} from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
-import { Promise, resolve } from 'q';
 import { IProduct } from '../../../models/product';
-
 
 @Injectable()
 export class ProductService {
-
   private basePath = '/Products';
 
   prodductsRef: AngularFireList<IProduct>;
@@ -18,15 +19,19 @@ export class ProductService {
 
   // Return an observable list of products
   getProductsList(): Observable<IProduct[]> {
-    return this.prodductsRef.snapshotChanges().map((arr) => {
-      return arr.map((snap) => Object.assign(snap.payload.val(), { $key: snap.key }));
+    return this.prodductsRef.snapshotChanges().map(arr => {
+      return arr.map(snap =>
+        Object.assign(snap.payload.val(), { $key: snap.key })
+      );
     });
   }
 
   // Return a single observable item
   getProduct(key: string): Observable<IProduct | null> {
     const productPath = `${this.basePath}/${key}`;
-    const product = this.db.object(productPath).valueChanges() as Observable<IProduct | null>;
+    const product = this.db
+      .object(productPath)
+      .valueChanges() as Observable<IProduct | null>;
     return product;
   }
 
@@ -34,7 +39,9 @@ export class ProductService {
   createProduct(product: IProduct): PromiseLike<any> {
     return this.prodductsRef.push(product).then(prod => {
       if (prod) {
-        return resolve(prod);
+        return prod;
+      } else {
+        return null;
       }
     });
   }
@@ -58,5 +65,4 @@ export class ProductService {
   private handleError(error: Error) {
     console.error(error);
   }
-
 }

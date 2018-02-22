@@ -11,6 +11,9 @@ import { FeatureListComponent } from '../features/feature-list/feature-list.comp
 import { FeatureFormComponent } from '../features/feature-form/feature-form.component';
 import { ProductImageListComponent } from '../product-images/product-image-list/product-image-list.component';
 import { ProductImageFormComponent } from '../product-images/product-image-form/product-image-form.component';
+import { CustomerListComponent } from '../customers/customer-list/customer-list.component';
+import { AppBannerImageListComponent } from '../app-banner-images/app-banner-image-list/app-banner-image-list.component';
+import { AppBannerImageFormComponent } from '../app-banner-images/app-banner-image-form/app-banner-image-form.component';
 
 
 const childRoutes: Routes = [
@@ -45,11 +48,6 @@ const childRoutes: Routes = [
         canActivate: [AuthGuard]
       },
       {
-        path: 'orderlist',
-        component: OrderListComponent,
-        canActivate: [AuthGuard]
-      },
-      {
         path: 'featurelist',
         component: FeatureListComponent,
         canActivate: [AuthGuard]
@@ -72,6 +70,26 @@ const childRoutes: Routes = [
       {
         path: 'addproductimage/new',
         component: ProductImageFormComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'orderlist',
+        component: OrderListComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'customerlist',
+        component: CustomerListComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'bannerimagelist',
+        component: AppBannerImageListComponent,
+        canActivate: [AuthGuard]
+      },
+      {
+        path: 'addbannerimage/new',
+        component: AppBannerImageFormComponent,
         canActivate: [AuthGuard]
       },
     ]

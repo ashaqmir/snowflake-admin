@@ -8,12 +8,10 @@ import { IOrder } from '../../../models/order';
   styleUrls: ['./order-details.component.css']
 })
 export class OrderDetailsComponent implements OnInit {
-
-
   @Input() order: IOrder;
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   ngOnInit() {
+    console.log(this.order);
   }
-
 }

@@ -12,12 +12,10 @@ import { IOrder } from '../../../models/order';
 export class OrderListComponent implements OnInit {
   orders: Observable<IOrder[]>;
 
-  constructor(private ordrSvc: OrderService,
-    private router: Router) {
-    this.orders = this.ordrSvc.getOrdersList();
-  }
+  constructor(private ordrSvc: OrderService, private router: Router) {}
 
   ngOnInit() {
+    this.orders = this.ordrSvc.getOrdersList();
+    console.log(this.orders);
   }
-
 }

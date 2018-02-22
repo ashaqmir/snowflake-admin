@@ -6,12 +6,6 @@ const menuItems = [
         icon: 'fa-barcode'
     },
     {
-        caption: 'Orders',
-        target: 'dashboard/orderlist',
-        isActive: false,
-        icon: 'fa-cart-plus'
-    },
-    {
         caption: 'Features',
         target: 'dashboard/featurelist',
         isActive: false,
@@ -22,7 +16,25 @@ const menuItems = [
         target: 'dashboard/productimagelist',
         isActive: false,
         icon: 'fa-file-image-o'
-    }
+    },
+    {
+        caption: 'Customers',
+        target: 'dashboard/customerlist',
+        isActive: false,
+        icon: 'fa-users'
+    },
+    {
+        caption: 'Orders',
+        target: 'dashboard/orderlist',
+        isActive: false,
+        icon: 'fa-cart-plus'
+    },
+    {
+        caption: 'App Banner Images',
+        target: 'dashboard/bannerimagelist',
+        isActive: false,
+        icon: 'fa-cart-plus'
+    },
 ];
 
 export default menuItems;

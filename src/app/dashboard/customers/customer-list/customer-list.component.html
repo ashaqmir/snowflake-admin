@@ -1,0 +1,62 @@
+<div class="content-wrapper" style="min-height: 706px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1 style="display: inline-flex">
+      Customers
+    </h1>
+  </section>
+  <!-- Main content -->
+  <section class="content">
+
+    <div class="box box-warning box-solid">
+      <div class="box-header with-border">
+        <h3 class="box-title">Filter</h3>
+        <div class="box-tools pull-right">
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <div class="row" style="vertical-align: middle">
+          <div class="col-lg-6 col-md-6 col-xs-12">
+            <div class="form-group has-feedback">
+              <label>Phone</label>
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-phone-square"></i>
+                </div>
+                <input type="number" class="form-control" placeholder="Phone..." [(ngModel)]="customerPhone">
+              </div>
+            </div>
+          </div>
+          <!-- /.col -->
+          <div class="col-lg-6 col-md-6 col-xs-12">
+            <div class="form-group has-feedback">
+              <label>Email</label>
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-envelope"></i>
+                </div>
+                <input type="email" class="form-control" placeholder="Email..." [(ngModel)]="customerEmail">
+              </div>
+            </div>
+          </div>
+          <!-- /.col -->
+        </div>
+      </div>
+      <!-- ./box-body -->
+      <div class="box-footer">
+        <button type="submit" class="btn btn-danger pull-left" (click)="clearFilter()">
+          <i class="fa fa-trash-o"></i> Clear</button>
+        <button type="submit" class="btn btn-primary pull-right" (click)="search()">
+          <i class="fa fa-search"></i> Search</button>
+      </div>
+    </div>
+    <!-- /.box -->
+
+
+    <div *ngFor="let customer of customers | async" class="row">
+      <app-customer-details [customer]='customer'></app-customer-details>
+    </div>
+
+  </section>
+</div>

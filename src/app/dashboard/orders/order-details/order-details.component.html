@@ -1,7 +1,7 @@
 <div class="col-md-12 col-xs-12 col-lg-12">
   <div class="box box-warning box-solid">
     <div class="box-header with-border">
-      <h3 class="box-title">{{order.productReference}}</h3>
+      <h3 class="box-title">{{order.reference}}</h3>
       <div class="box-tools pull-right">
         <button type="button" class="btn btn-box-tool" data-widget="collapse">
           <i class="fa fa-minus"></i>
@@ -11,7 +11,6 @@
     <!-- /.box-header -->
     <div class="box-body">
       <div class="row">
-
         <!-- /.col -->
         <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
           <div class="box box-warning">
@@ -30,11 +29,11 @@
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
                   <b>Email</b>
-                  <a class="pull-right">{{order.userMail}}</a>
+                  <a class="pull-right">{{order.customerEmail}}</a>
                 </li>
                 <li class="list-group-item">
                   <b>UID</b>
-                  <a class="pull-right">{{order.userID}}</a>
+                  <a class="pull-right">{{order.customerId}}</a>
                 </li>
               </ul>
             </div>
@@ -57,23 +56,23 @@
               <ul class="list-group list-group-unbordered">
                 <li class="list-group-item">
                   <b>Street</b>
-                  <a class="pull-right">{{order.shippingAddress.street}}</a>
+                  <a class="pull-right">{{order.customerAddress.street}}</a>
                 </li>
                 <li class="list-group-item">
                   <b>City</b>
-                  <a class="pull-right">{{order.shippingAddress.city}}</a>
+                  <a class="pull-right">{{order.customerAddress.city}}</a>
                 </li>
                 <li class="list-group-item">
                   <b>Country</b>
-                  <a class="pull-right">{{order.shippingAddress.region}}</a>
+                  <a class="pull-right">{{order.customerAddress.region}}</a>
                 </li>
                 <li class="list-group-item">
                   <b>Region</b>
-                  <a class="pull-right">{{order.shippingAddress.country}}</a>
+                  <a class="pull-right">{{order.customerAddress.country}}</a>
                 </li>
                 <li class="list-group-item">
                   <b>ZIP</b>
-                  <a class="pull-right">{{order.shippingAddress.zip}}</a>
+                  <a class="pull-right">{{order.customerAddress.zip}}</a>
                 </li>
               </ul>
             </div>
@@ -84,9 +83,12 @@
         <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
           <div style="text-align:center">
             <div class="btn-group-vertical">
-              <button type="button" class="btn btn-success btn-lg"><i class="fa fa fa-play"></i> Fullfill</button>
-              <button type="button" class="btn btn-danger btn-lg"><i class="fa fa-repeat"></i> Refund</button>
-              <button type="button" class="btn btn-warning btn-lg"><i class="fa fa-check-square-o"></i> Complete</button>
+              <button type="button" class="btn btn-success btn-lg">
+                <i class="fa fa fa-play"></i> Fullfill</button>
+              <button type="button" class="btn btn-danger btn-lg">
+                <i class="fa fa-repeat"></i> Refund</button>
+              <button type="button" class="btn btn-warning btn-lg">
+                <i class="fa fa-check-square-o"></i> Complete</button>
             </div>
           </div>
         </div>
@@ -99,20 +101,20 @@
 
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
           <div class="description-block border-right">
-            <h5 class="description-header">{{order.price}}</h5>
-            <span class="description-text">PRICE</span>
+            <h5 class="description-header">{{order.arrivalDate}} : {{order.arrivalTime}}</h5>
+            <span class="description-text">ARRIVAL</span>
           </div>
         </div>
 
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
           <div class="description-block border-right">
-            <h5 class="description-header">{{order.tax}}</h5>
-            <span class="description-text">TAX</span>
+            <h5 class="description-header">{{order.paymentType}}</h5>
+            <span class="description-text">PAYMENT TYPE</span>
           </div>
         </div>
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
           <div class="description-block border-right">
-            <h5 class="description-header">{{order.amountPaid}}</h5>
+            <h5 class="description-header">{{order.customerPaid}}</h5>
             <span class="description-text">CUSTOMER PAID</span>
           </div>
         </div>

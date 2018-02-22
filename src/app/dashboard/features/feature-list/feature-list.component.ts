@@ -20,7 +20,7 @@ export class FeatureListComponent implements OnInit {
   ngOnInit() {
   }
 
-  addProduct() {
+  addFeature() {
     this.router.navigate(['/dashboard/addfeature/new']);
   }
 }

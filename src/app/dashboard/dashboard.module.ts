@@ -2,8 +2,12 @@ import { ProductImageModule } from './product-images/shared/product-image.module
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DashboardComponent } from './dashboard.component';
-import { HeaderComponent, SideMenuComponent,
-  ControlSidebarComponent, FooterComponent } from './shared/shared';
+import {
+  HeaderComponent,
+  SideMenuComponent,
+  ControlSidebarComponent,
+  FooterComponent
+} from './shared/shared';
 import { LandingComponent } from './landing/landing.component';
 import { DashboardRoutingModule } from './dashboard-routing/dashboard-routing.module';
 import { ProductFormComponent } from './products/product-form/product-form.component';
@@ -21,6 +25,12 @@ import { FeatureModule } from './features/shared/feature.module';
 import { ProductImageFormComponent } from './product-images/product-image-form/product-image-form.component';
 import { ProductImageListComponent } from './product-images/product-image-list/product-image-list.component';
 import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.component';
+import { CustomerListComponent } from './customers/customer-list/customer-list.component';
+import { CustomerDetailsComponent } from './customers/customer-details/customer-details.component';
+import { CustomerModule } from './customers/shared/customer.module';
+import { AppBannerImageModule } from './app-banner-images/shared/app-banner-image.module';
+import { AppBannerImageListComponent } from './app-banner-images/app-banner-image-list/app-banner-image-list.component';
+import { AppBannerImageFormComponent } from './app-banner-images/app-banner-image-form/app-banner-image-form.component';
 
 @NgModule({
   imports: [
@@ -30,7 +40,9 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
     ProductModule,
     OrderModule,
     FeatureModule,
-    ProductImageModule
+    ProductImageModule,
+    CustomerModule,
+    AppBannerImageModule
   ],
   declarations: [
     DashboardComponent,
@@ -42,14 +54,18 @@ import { LoadingSpinnerComponent } from '../loading-spinner/loading-spinner.comp
     ProductFormComponent,
     ProductListComponent,
     ProductDetailsComponent,
-    OrderListComponent,
-    OrderDetailsComponent,
     FeatureListComponent,
     FeatureDetailsComponent,
     FeatureFormComponent,
     ProductImageFormComponent,
     ProductImageListComponent,
+    OrderListComponent,
+    OrderDetailsComponent,
+    CustomerListComponent,
+    CustomerDetailsComponent,
     LoadingSpinnerComponent,
+    AppBannerImageListComponent,
+    AppBannerImageFormComponent
   ]
 })
-export class DashboardModule { }
+export class DashboardModule {}

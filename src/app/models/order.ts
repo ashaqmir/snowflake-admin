@@ -1,15 +1,23 @@
 import { IAddress } from './address';
+import { IProduct } from './product';
 export class IOrder {
-    constructor() { }
-    $key: string;
-    productReference: string;
-    userMail: string;
-    userID: string;
-    shippingAddress: IAddress;
-    price: number;
-    tax: number;
-    amountPaid: number;
-    payPalStatus: string;
-    fullfilled: boolean;
+  constructor() {}
+  customerId: string;
+  customerEmail: string;
+  customerAddress: IAddress;
 
+  reference: string;
+
+  Package: IProduct;
+  adults: number;
+  children: number;
+  customerPaid: number;
+
+  paymentState: string;
+  paymentType: string;
+
+  arrivalDate: string;
+  arrivalTime: string;
+
+  paymentId: string;
 }

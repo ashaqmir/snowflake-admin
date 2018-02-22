@@ -1,5 +1,5 @@
-import { IFeature } from "./feature";
-import { IProductImage } from "./product-image";
+import { IFeature } from './feature';
+import { IProductImage } from './product-image';
 
 export class IProduct {
   $key: string;
@@ -17,7 +17,11 @@ export class IProduct {
 
   pricefor = 1;
   personAddOption = 1;
-  includes: string;
+
+  childrenAllowed = true;
+  children = 0;
+  childPriceFactor = 0.0;
+
   isHot: boolean;
   enabled: boolean;
 }

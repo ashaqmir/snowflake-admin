@@ -252,35 +252,84 @@
                     [(ngModel)]="productDetails.name" #pname="ngModel"> -->
                 <div class="input-group">
                   <div class="row">
-                    <div class="col-lg-3 col-md-3 col-xs-12" >
+                    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                       <code class="input-group-addon">{{productDetails.pricefor}} </code>
                     </div>
-                    <div class="col-lg-9 col-md-9 col-xs-12" style="vertical-align: middle; padding-top:6px">
+                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12" style="vertical-align: middle; padding-top:6px">
                       <input type="range" class="slider" [(ngModel)]="productDetails.pricefor" name="priceFor" #priceFor="ngModel" required min="1"
-                        max="20" step="1">                      
+                        max="20" step="1">
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-6 col-md-6 col-xs-12">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
               <div class="form-group has-feedback">
-                <label>Persons add option</label>           
+                <label>Persons add option</label>
                 <div class="input-group">
                   <div class="row">
-                    <div class="col-lg-3 col-md-3 col-xs-12" >
+                    <div class="col-lg-3 col-md-3 col-xs-12">
                       <code class="input-group-addon">{{productDetails.personAddOption}} </code>
                     </div>
-                    <div class="col-lg-9 col-md-9 col-xs-12" style="vertical-align: middle; padding-top:6px">
-                      <input type="range" class="slider" [(ngModel)]="productDetails.personAddOption" name="perAddOpt" #perAddOpt="ngModel" required min="1"
-                        max="20" step="1">                     
+                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12" style="vertical-align: middle; padding-top:6px">
+                      <input type="range" class="slider" [(ngModel)]="productDetails.personAddOption" name="perAddOpt" #perAddOpt="ngModel" required
+                        min="0" max="20" step="1">
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="row">            
+
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12">
+              <div class="switch-container">
+                <input type="checkbox" class="switch" name="childrenAllowed" [(ngModel)]="productDetails.childrenAllowed" (ngModelChange)="childOptionChanged($event)">
+                <label>Children Allowed</label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Children</label>
+                <div class="input-group">
+                  <div class="row">
+                    <div class="col-lg-3 col-md-3 col-xs-12">
+                      <code class="input-group-addon">{{productDetails.children}} </code>
+                    </div>
+                    <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12" style="vertical-align: middle; padding-top:6px">
+                      <input type="range" class="slider" [(ngModel)]="productDetails.children" name="chidlren" #chidlren="ngModel" required min="0"
+                        max="4" step="1" [disabled]="!productDetails.childrenAllowed">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+              <div class="form-group has-feedback">
+                <label>Child Price Factor</label>
+                <div class="input-group">
+                  <div class="input-group-addon">
+                    <i class="icon-percent"></i>
+                  </div>
+                  <input type="text" class="form-control" placeholder="0.0" required pattern="^\d+\.\d*$" name="childPriceFactor" [(ngModel)]="productDetails.childPriceFactor"
+                    #childPriceFactor="ngModel" [disabled]="!productDetails.childrenAllowed">
+                  <div *ngIf="childPriceFactor.errors && (childPriceFactor.dirty || childPriceFactor.touched)" class="alert alert-danger">
+                    <div [hidden]="!childPriceFactor.errors.required">
+                      Child price factor is required!
+                    </div>
+                    <div [hidden]="!childPriceFactor.errors.pattern">
+                      wrong child price factor format
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
             <div class="col-lg-6 col-md-6 col-xs-12">
               <div class="switch-container">
                 <input type="checkbox" class="switch" name="isHot" [(ngModel)]="productDetails.isHot">
@@ -290,7 +339,7 @@
 
             <div class="col-lg-6 col-md-6 col-xs-12">
               <div class="switch-container">
-                <input type="checkbox" class="switch" name="isActive" [(ngModel)]="productDetails.isActive">
+                <input type="checkbox" class="switch" name="isActive" [(ngModel)]="productDetails.enabled">
                 <label>is Active</label>
               </div>
             </div>

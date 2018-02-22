@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
-import { AngularFireList, AngularFireObject, AngularFireDatabase } from 'angularfire2/database';
+import {
+  AngularFireList,
+  AngularFireObject,
+  AngularFireDatabase
+} from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
-import { Promise, resolve } from 'q';
 import { IFeature } from '../../../models/feature';
-
 
 @Injectable()
 export class FeatureService {
-
   private basePath = '/Features';
   featuresRef: AngularFireList<IFeature>;
   productFeatures: Observable<IFeature[]>;
@@ -18,34 +19,29 @@ export class FeatureService {
 
   // Return an observable list of products
   getFeatureList(): Observable<IFeature[]> {
-    return this.featuresRef.snapshotChanges().map((arr) => {
-      return arr.map((snap) => Object.assign(snap.payload.val(), { $key: snap.key }));
+    return this.featuresRef.snapshotChanges().map(arr => {
+      return arr.map(snap =>
+        Object.assign(snap.payload.val(), { $key: snap.key })
+      );
     });
-    // if (this.productFeatures) {
-    //   return this.productFeatures;
-    // }
-    // this.productFeatures = this.db.list(this.basePath).snapshotChanges().map((actions) => {
-    //   return actions.map((a) => {
-    //     const data = a.payload.val();
-    //     const $key = a.payload.key;
-    //     return { $key, ...data };
-    //   });
-    // });
-    // return this.productFeatures;
   }
 
   // Return a single observable item
   getFeature(key: string): Observable<IFeature | null> {
     const featurePath = `${this.basePath}/${key}`;
-    const feature = this.db.object(featurePath).valueChanges() as Observable<IFeature | null>;
+    const feature = this.db
+      .object(featurePath)
+      .valueChanges() as Observable<IFeature | null>;
     return feature;
   }
 
   // Create a brand new product
   createFeature(feature: IFeature): PromiseLike<any> {
-    return this.featuresRef.push(feature).then(prod => {
-      if (prod) {
-        return resolve(prod);
+    return this.featuresRef.push(feature).then(ftr => {
+      if (ftr) {
+        return ftr;
+      } else {
+        return null;
       }
     });
   }

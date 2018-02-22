@@ -5,20 +5,19 @@ import {
   AngularFireDatabase
 } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
-import { IFeature } from '../../../models/feature';
-import { IProductImage } from '../../../models/product-image';
 import * as firebase from 'firebase';
+import { IBannerImage } from '../../../models/banner-image';
 
 @Injectable()
-export class ProductImageService {
+export class AppBannerImageService {
   uploadChange: EventEmitter<string> = new EventEmitter();
 
-  basePath = 'ProductImages';
-  productImages: Observable<IProductImage[]>;
+  basePath = 'AppBannerImages';
+  productImages: Observable<IBannerImage[]>;
 
   constructor(private db: AngularFireDatabase) {}
 
-  getProductImages() {
+  getBannerImages() {
     this.productImages = this.db
       .list(this.basePath)
       .snapshotChanges()
@@ -32,15 +31,15 @@ export class ProductImageService {
     return this.productImages;
   }
 
-  deleteProductImage(productImage: IProductImage) {
+  deleteBannerImage(productImage: IBannerImage) {
     this.deleteFileData(productImage.$key)
       .then(() => {
-        this.deleteFileStorage(productImage.name);
+        this.deleteFileStorage(productImage.title);
       })
       .catch(error => console.log(error));
   }
 
-  pushProductImage(productImage: IProductImage) {
+  pushBannerImage(productImage: IBannerImage) {
     const storageRef = firebase.storage().ref();
     const uploadTask = storageRef
       .child(`${this.basePath}/${productImage.file.name}`)
@@ -75,7 +74,7 @@ export class ProductImageService {
     );
   }
 
-  private saveFileData(productImage: IProductImage): PromiseLike<any> {
+  private saveFileData(productImage: IBannerImage): PromiseLike<any> {
     return this.db.list(`${this.basePath}/`).push(productImage);
   }
 
